@@ -5,6 +5,7 @@
   grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
   margin-top: 50px;
   justify-content: space-around;
+
 }
 input[type="text"] {
   border: solid 1px var(--primary-color);
@@ -17,7 +18,7 @@ input[type="text"] {
 button {
   padding: 9px;
   border: solid 1px white;
-  background: purple;
+  background: mediumpurple;
   color: white;
   border-radius: 8px;
 }
