@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Housinglocation} from './interfaces/housinglocation';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +11,14 @@ export class HousingService {
   constructor() { }
   readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
   url = 'http://localhost:3000/locations';
+  http = inject(HttpClient)
 
-  async getAllHousingLocations(): Promise<Housinglocation[]>{
-    const data = await  fetch(this.url)
-    return (await data.json())?? []
+   getAllHousingLocations(): Observable<Housinglocation[]>{
+    return this.http.get<Housinglocation[]>(this.url)
   }
 
-  async getHousingLocation(id:number):Promise<Housinglocation | undefined> {
-    const data = await fetch(`${this.url}/${id}`)
-    return (await  data.json()) ?? {}
-
+  getHousingLocation(id:number):Observable<Housinglocation> {
+   return this.http.get<Housinglocation>(`${this.url}/${id}`)
   }
 
   submitApplication(firstName: string, lastName: string, email: string ){

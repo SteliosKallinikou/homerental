@@ -4,6 +4,7 @@ import {Housinglocation} from '../interfaces/housinglocation';
 import {CommonModule} from '@angular/common';
 import {HousingService} from '../housing.service';
 
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -13,20 +14,22 @@ import {HousingService} from '../housing.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  housingLocationList: Housinglocation[]=[]
   filteredLocationList: Housinglocation[]=[]
+  housingList: Housinglocation[]=[]
   housingService:HousingService = inject(HousingService)
 
   constructor() {
-   this.housingService.getAllHousingLocations().then((housingLocationList: Housinglocation[])=>{
-     this.housingLocationList= housingLocationList
-     this.filteredLocationList= housingLocationList
-   })
-    this.filteredLocationList= this.housingLocationList
+  this.housingService.getAllHousingLocations().subscribe({
+    next:(data)=>{
+     this.housingList=data
+      this.filteredLocationList=data
+    }
+  })
+
   }
   filterResults(text: string) {
     if(!text){
-      this.filteredLocationList= this.housingLocationList
+      this.filteredLocationList= this.housingList
       return;
     }
     this.filteredLocationList=this.filteredLocationList.filter((housingLocation)=>
