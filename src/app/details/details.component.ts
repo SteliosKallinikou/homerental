@@ -16,7 +16,7 @@ export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute)
   housingService = inject(HousingService)
   housingLocation: Housinglocation|undefined
-  housingLocationId=-1
+
 
   applyForm = new FormGroup({
     firstName: new FormControl(''),
@@ -27,8 +27,10 @@ export class DetailsComponent {
 
   constructor() {
     const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
-    this.housingService.getHousingLocation(housingLocationId).then((housingLocation)=>{
-      this.housingLocation=housingLocation
+    this.housingService.getHousingLocation(housingLocationId).subscribe({
+      next: (data)=>{
+        this.housingLocation=data
+      }
     })
 
   }
